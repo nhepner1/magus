@@ -1,0 +1,255 @@
+@CHARSET "ISO-8859-1";
+
+*{margin:0;padding:0;border:0}
+
+html, address,
+blockquote,
+body, dd, div,
+dl, dt, fieldset, form,
+frame, frameset,
+h1, h2, h3, h4,
+h5, h6, noframes,
+ol, p, ul, center,
+dir, hr, menu, pre   { display: block }
+li              { display: list-item }
+head            { display: none }
+table           { display: table }
+tr              { display: table-row }
+thead           { display: table-header-group }
+tbody           { display: table-row-group }
+tfoot           { display: table-footer-group }
+col             { display: table-column }
+colgroup        { display: table-column-group }
+td, th          { display: table-cell }
+caption         { display: table-caption }
+th              { font-weight: bolder; text-align: center }
+caption         { text-align: center }
+h1              { font-size: 2em; margin: .67em 0 }
+h2              { font-size: 1.5em; margin: .75em 0 }
+h3              { font-size: 1.17em; margin: .83em 0 }
+h4, p,
+blockquote,
+fieldset, form,
+ol, dl, dir,
+menu            { margin: 1.12em 0 }
+h5              { font-size: .83em; margin: 1.5em 0 }
+h6              { font-size: .75em; margin: 1.67em 0 }
+h1, h2, h3, h4,
+h5, h6, b,
+strong          { font-weight: bolder }
+blockquote      { margin-left: 40px; margin-right: 40px }
+i, cite, em,
+var, address    { font-style: italic }
+pre, tt, code,
+kbd, samp       { font-family: monospace }
+pre             { white-space: pre }
+button, textarea,
+input, select   { display: inline-block }
+big             { font-size: 1.17em }
+small, sub, sup { font-size: .83em }
+sub             { vertical-align: sub }
+sup             { vertical-align: super }
+table           { border-spacing: 2px; }
+thead, tbody,
+tfoot           { vertical-align: middle }
+td, th          { vertical-align: inherit }
+s, strike, del  { text-decoration: line-through }
+hr              { border: 1px inset }
+ol, ul, dir,
+menu, dd        { margin-left: 40px }
+ol              { list-style-type: decimal }
+ol ul, ul ol,
+ul ul, ol ol    { margin-top: 0; margin-bottom: 0 }
+u, ins          { text-decoration: underline }
+br:before       { content: "\A" }
+:before, :after { white-space: pre-line }
+center          { text-align: center }
+:link, :visited { text-decoration: underline }
+:focus          { outline: thin dotted invert }
+
+/* Begin bidirectionality settings (do not change) */
+BDO[DIR="ltr"]  { direction: ltr; unicode-bidi: bidi-override }
+BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
+
+*[DIR="ltr"]    { direction: ltr; unicode-bidi: embed }
+*[DIR="rtl"]    { direction: rtl; unicode-bidi: embed }
+
+@media print {
+  h1            { page-break-before: always }
+  h1, h2, h3,
+  h4, h5, h6    { page-break-after: avoid }
+  ul, ol, dl    { page-break-before: avoid }
+}
+
+body {
+	/*font-family: 'Trebuchet MS', Helvetica, sans-serif;*/
+	/*font-family: 'MS Sans Serif', Geneva, sans-serif;*/
+	/*font-family: Tahoma, Geneva, sans-serif;*/
+	background-color: #000000;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size:	75%;
+	color: #333333;
+}
+
+table tr td { font-size: 75%;}
+
+a:link { color: red; }
+a:visited { color: red; }
+a:active { color: orange; }
+
+.clear {
+	clear: both;
+	border: 0; !important /* Kill this later */
+}
+
+fieldset { 
+	border: 1px solid #666666;
+	width: 100%;
+	padding: 10px 20px 20px 20px;
+}
+
+legend {
+	margin-left: 10px;
+	padding: 0 5px;
+	
+}
+
+input {
+	border: 1px solid #000000;
+	margin: 2px;
+}
+
+th {
+	font-size: 75%;
+	padding-right: 20px;
+}
+
+
+
+.hide {
+	display: none;
+}
+
+/* Sections */
+.outerwrapper {
+	background: orange;
+}
+
+.header {
+	background: #000000;
+	color: #FFFFFF;
+}
+
+.logo {
+	height: 75px;
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wrapper {
+	background: #FFFFFF;
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 500px;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+}
+
+/* left sidebar*/
+.left_sidebar {
+	width: 180px;
+	display: block;
+	float: left;
+	padding: 20px;
+}
+
+/* content */
+.content {
+	display: block;
+	float: left;
+	padding: 20px;
+	width: 570px;
+	
+}
+
+/* right sidebar */
+.right_sidebar {
+	display: block;
+	float: right;
+	width: 230px;
+
+}
+
+.footer {
+	background: #000000;
+	color: #FFFFFF;
+}
+
+.footer_links {
+	height: 100px;
+	width: 980px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* top menu */
+div.top_menu {
+	width: 980px;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+div.top_menu ul  {
+	list-style-type: none;
+	margin: 0;
+
+}
+
+div.top_menu ul li {
+	padding: 0 10px 5px;
+	margin: 0;
+	float: left;
+}
+
+div.top_menu ul li a {
+	text-decoration: none;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+/* Navigation menu */
+div.nav_menu ul {
+
+}
+
+div.nav_menu ul li a {
+	text-decoration: none;
+}
+
+
+/* login */
+table.login {
+	margin-top: -6px;
+	font-family: Verdana, Geneva, sans-serif;
+	border: 1px solid #000000;
+}
+
+table.login tr th {
+	text-align: left;
+	padding: 2px;
+}
+
+.grey_3 {
+	background-color: #333333;
+	color: #FFFFFF;
+}
+
+/* Administration */
+.user_list tr th, .user_list tr td {
+	padding: 5px 20px;	
+}
+
+.danfro_intimidator { border: 1px solid red; background-color: #333; color: #FFF; }
