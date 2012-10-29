@@ -1,5 +1,59 @@
 <?php
 
+class DBconnect {
+  private static $factory;
+  
+  /**
+   * Container for multiple database connection resources.
+   */
+  private $connections = array();
+  
+  /**
+   * Pointer for the current active database connection.
+   */
+  private $activeConnection = 0;
+    
+  /**
+   * Prevent cloning of the object: issues an E_USER_ERROR if this is attempted
+   * 
+   * @return void
+   */
+  public function __clone() {
+    trigger_error('Cloning the registry is not permitted', E_USER_ERROR);
+  }
+    
+  public static function getFactory()
+  {
+      if (!self::$factory)
+          self::$factory = new DBconnect();
+      return self::$factory;
+  }
+
+  public function addConnection($id, $db_host, $db_user, $db_pass, $db_name) {
+    $this->dbs[$id] = mysqli($db_host, $db_user, $db_pass, $db_name);
+    
+    return $this;
+  }
+  
+  public function connection() {
+      if (!$db)
+          $db = new mysqli();
+      return $db;
+  }
+  
+  /**
+   * Change which database connection is actively used for the next operation
+   * 
+   * @param int new connection id
+   * @return Current DBConnect instance
+   */
+  public function setActiveConnection(int $new) {
+    $this->activeConnection = $new;
+    
+    return $this;
+  }
+}
+
 /**
  * Class for establishing, managing, and distributing database connection resources.
  */
@@ -62,12 +116,15 @@ class DBconnect {
    * @return The activeConnection id for the newly created database.
    */
 	public function connect($host, $user, $password, $database) {
-	  //@TODO: Create abstraction layer to use multiple database types.
-	  //@TODO: Add a string based assignment for 
-		$this->connections[] = new mysqli($host, $user, $password, $database);
-		$connection_id = count($this->connections) -1;
+	  
+    //@TODO: Create abstraction layer to use multiple database types.
+    //@TODO: Add a string based assignment for $connections ids
+		self::$connections[] = new mysqli($host, $user, $password, $database);
+    
+		$connection_id = count(self::$connections) -1;
+
 		if(mysqli_connect_errno()) {
-			trigger_error('Error connecting to host. '.$this->connections[$connection_id]->error, E_USER_ERROR);
+			trigger_error('Error connecting to host. '.self::$connections[$connection_id]->error, E_USER_ERROR);
 		}
 		
 		return $connection_id;

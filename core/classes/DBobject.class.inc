@@ -9,9 +9,9 @@ abstract class DBobject {
 	
 	abstract protected function validate($op = '');
 	
-	protected function __construct($table) {
+	protected function __construct($connection, $table) {
 		//get existing database connection object
-		$this->db = dbconnect::getInstance();
+		$this->db = $connection;
 		
 		$this->table = addslashes($table);
 		$this->setFields();

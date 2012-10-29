@@ -20,7 +20,7 @@ class DBQuery {
   /**
    * Constructor
    */
-  public function __construct($DBconnect = '') {
+  public function __construct($DBconnect) {
     $this->setDBconnect($DBconnect);
   }
   

@@ -25,22 +25,9 @@ $page->setRegion('left_sidebar', "Tada!!!");
 $page->setRegion('right_sidebar', "Wicked");
 $page->setRegion('footer', "BAM!! Footer");
 
-$left_sidebar = new Region();
+$dbconnect = DBConnect::getInstance();
+$dbconnect->connect($registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'));
 
-	$template = new Template();
-	$template->setPath(THEMES_PATH.DS.$registry->setting('theme').DS."templates");
-	$template->setTemplate('danfro');
-
-	$left_sidebar->addPlugin('Template', $template, 8);
-	
-	$template = new Template();
-	$template->setPath(THEMES_PATH.DS.$registry->setting('theme').DS."templates");
-	$template->setTemplate('test_subject');
-	$left_sidebar->addPlugin('Template', $template, 6);
-/*$left_sidebar->addPlugin('test', 0, 'Stuff', array('test', 'nothin'), 'relaxed', 1121);
-$left_sidebar->addPlugin('newtest', 50, "other stuff");
-$left_sidebar->addPlugin('third_test', 10, "more stuff");
-$left_sidebar->addPlugin('forth_test', 5, "forth stuff");*/
-$page->setRegion('left_sidebar', $left_sidebar->render());
+$page->setRegion('content', '<pre>'.print_r($dbconnect, TRUE).'</pre>');
 print $page->render();
 
