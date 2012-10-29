@@ -26,7 +26,8 @@ $page->setRegion('right_sidebar', "Wicked");
 $page->setRegion('footer', "BAM!! Footer");
 
 $dbconnect = DBConnect::getInstance();
-$dbconnect->connect($registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'));
+$dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'));
+
 
 $page->setRegion('content', '<pre>'.print_r($dbconnect, TRUE).'</pre>');
 print $page->render();
