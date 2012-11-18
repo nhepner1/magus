@@ -5,13 +5,13 @@ abstract class DBobject {
 	private $table;
 	private $fields = array();
 	private $table_info = array();
-	private $db;
+	private $dbquery;
 	
 	abstract protected function validate($op = '');
 	
-	protected function __construct($connection, $table) {
+	protected function __construct(DBQuery $dbquery, $table) {
 		//get existing database connection object
-		$this->db = $connection;
+		$this->_setDBquery($dbquery);
 		
 		$this->table = addslashes($table);
 		$this->setFields();
@@ -36,9 +36,9 @@ abstract class DBobject {
 	}
 	
 	private function setFields() {	
-		$this->db->executeQuery("SHOW FIELDS FROM $this->table");
+		$this->_getDBquery()->executeQuery("SHOW FIELDS FROM $this->table");
 		
-		foreach($this->db->fetchArray() as $row) {
+		foreach($this->_getDBquery()->fetchArray() as $row) {
 			$this->table_info[$row['Field']] = $row; 
 			$this->fields[$row['Field']] = null;
 		}
@@ -67,8 +67,8 @@ abstract class DBobject {
 			return false;
 		}
 		
-		$this->db->executeQuery("SELECT * FROM $this->table WHERE id = $id LIMIT 1");
-		$row = $this->db->fetchArrayRow();
+		$this->_getDBquery()->executeQuery("SELECT * FROM $this->table WHERE id = $id LIMIT 1");
+		$row = $this->_getDBquery()->fetchArrayRow();
 		
 		if($row) {
 			foreach($row as $key => $value) {
@@ -90,15 +90,21 @@ abstract class DBobject {
 	
 			}
 			
-			if($this->db->insert($this->table, $data)){
-				return $this->db->insert_id;
+			if($this->_getDBquery()->insert($this->table, $data)){
+				return $this->_getDBquery()->insert_id();
 			} 
 		}
 		
 		return false;
 	}
 	
-
+  protected function _getDBquery() {
+    return $this->dbquery;
+  }
+  
+  protected function _setDBquery(DBQuery $dbquery) {
+    $this->dbquery = $dbquery;
+  }
 }
 /*class DBObject {
 	private $id = 0;

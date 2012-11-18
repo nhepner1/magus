@@ -26,9 +26,16 @@ $page->setRegion('right_sidebar', "Wicked");
 $page->setRegion('footer', "BAM!! Footer");
 
 $dbconnect = DBConnect::getInstance();
-$dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'));
+$dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'), TRUE);
 
 
-$page->setRegion('content', '<pre>'.print_r($dbconnect, TRUE).'</pre>');
+$dbusers = new DBusers(new DBQuery($dbconnect->connection()));
+$dbusers->setUsername('admin');
+$dbusers->setPassword('testpass');
+$dbusers->setEmail('nick@hepnermedia.com');
+
+$dbusers->create();
+
+$page->setRegion('content', '<pre>'.print_r($dbusers, TRUE).'</pre>');
 print $page->render();
 

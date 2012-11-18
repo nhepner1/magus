@@ -4,7 +4,8 @@
  * Class for multiple and general query results.
  */
  
-// TODO: see where addslashes() and htmlspecialchars() are needed. 
+// TODO: see where addslashes() and htmlspecialchars() are needed.
+// TODO: Create interface and factory to handle multiple database types.
 class DBQuery {
   
   /**
@@ -54,7 +55,7 @@ class DBQuery {
     /**
      * $last get accessor
      */
-    public function getQuery() {
+    public function getLast() {
       return $this->last;
     }
     
@@ -67,12 +68,12 @@ class DBQuery {
   public function executeQuery($queryStr) {
     
     // Be cool, wrap your tool...
-    $queryStr = $this->getDBConnect()->real_escape_string($queryStr);
-
-    if(!$result = $this->getDBConnect()->query($queryStr)) {
+    //$queryStr = $this->getDBConnect()->real_escape_string($queryStr);
+    $result = $this->getDBConnect()->query($queryStr);
+    if(!$result) {
       trigger_error('Error executing query: '.$this->getDBConnect()->error, E_USER_ERROR);
     } else {
-      $this->last = $result;
+      $this->setLast($result);
     }
     
     return $result;
@@ -138,6 +139,7 @@ class DBQuery {
    */
   public function insert($table, $data) {
     $query_vars = array();
+    
     if(!is_array($data) || empty($data)) {
       return false;
     }
@@ -180,11 +182,17 @@ class DBQuery {
   }
   
   public function insert_id() {
-    return $this->last->insert_id;
+    $last_result = $this->getLast();
+    
+    return is_object($last_result) ? $this->getLast()->insert_id : FALSE;
   }
   
   private function _stringQuotes(&$value, $key) {
     $value = is_numeric($value) ? $value : "'".$value."'";
+  }
+  
+  private function _executeCleanQuery($queryStr) {
+    
   }
 }
 

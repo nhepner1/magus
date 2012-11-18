@@ -2,6 +2,8 @@
 
 /**
  * Class for establishing, managing, and distributing database connection resources.
+ * 
+ * TODO: Set observer to set the active database in the DBQuery object. Maintain dependency injection.
  */
 class DBconnect {
 
@@ -66,6 +68,10 @@ class DBconnect {
 		if(mysqli_connect_errno()) {
 			trigger_error('Error connecting to host. '.$this->connections[$connection_id]->error, E_USER_ERROR);
 		}
+    
+    if($setActive) {
+      $this->setActiveConnection($connection_id);
+    }
 		
 		return $this->connections[$connection_id];
 	}
@@ -102,6 +108,7 @@ class DBconnect {
 	 * @return Current DBConnect instance
 	 */
 	public function setActiveConnection($connection_id) {
+
 		$this->activeConnection = $connection_id;
     
     return $this;
