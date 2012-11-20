@@ -30,11 +30,9 @@ $dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('d
 
 
 $dbusers = new DBusers(new DBQuery($dbconnect->connection()));
-$dbusers->setUsername('admin');
-$dbusers->setPassword('testpass');
-$dbusers->setEmail('nick@hepnermedia.com');
-
-$dbusers->create();
+$dbusers->load(1);
+$dbusers->setUsername('testusername');
+$dbusers->save();
 
 $page->setRegion('content', '<pre>'.print_r($dbusers, TRUE).'</pre>');
 print $page->render();

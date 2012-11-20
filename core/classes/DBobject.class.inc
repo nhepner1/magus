@@ -47,6 +47,10 @@ abstract class DBobject {
 		}
 	}
   
+  private function getFields() {
+    return $this->fields;
+  }
+  
   /**
    * Search through existing table information retrieved from
    * the database and determine which field is the primary key
@@ -119,6 +123,17 @@ abstract class DBobject {
 		return false;
 	}
   
+  public function save() {
+    $fields = $this->getFields();
+    if(!$fields[$this->primary_key]) {
+      return $this->create();
+    }
+    if($this->_validate('save')) {
+      $condition = sprintf("`%s` = %d", $this->primary_key, $fields[$this->primary_key]);
+      unset($fields[$this->primary_key]);
+      $this->_getDBquery()->update($this->table, $fields, $condition);
+    }
+  }
   protected function _getDBquery() {
     return $this->dbquery;
   }

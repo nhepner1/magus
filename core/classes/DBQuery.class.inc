@@ -111,21 +111,17 @@ class DBQuery {
    *  condition for setting the update where statement
    * @return bool
    */
-  public function update($table, $changes, $condition) {
+  public function update($table, $changes, $condition = '') {
     
-    //TODO: Convert to vsprintf and set to use $this->_stringQuotes() or similar
-    $update = "UPDATE ".$table." SET ";
+    $field_updates = array();
     foreach($changes as $field => $value) {
-      $update .= "`".$field."`='{$value}',";
+      $this->_stringQuotes($value); 
+      $field_updates[] = sprintf("%s= %s", $field, $value);
     }
     
-    // remove training comma
-    $update = substr($update, 0, -1);
-    if($condition != '') {
-      $update .= " WHERE ".$condition;
-    }
+    $sql = sprintf("UPDATE `%s` SET %s WHERE %s", $table, implode(', ', $field_updates), $condition);
     
-    return $this->executeQuery($update);
+    return $this->executeQuery($sql);
   }
   
   /**
@@ -187,8 +183,8 @@ class DBQuery {
     return is_object($last_result) ? $this->getLast()->insert_id : FALSE;
   }
   
-  private function _stringQuotes(&$value, $key) {
-    $value = is_numeric($value) ? $value : "'".$value."'";
+  private function _stringQuotes(&$value) {
+    $value = is_numeric($value) ? $value : "'".mysql_real_escape_string($value)."'";
   }
   
   private function _executeCleanQuery($queryStr) {
