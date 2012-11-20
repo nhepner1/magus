@@ -5,6 +5,7 @@ abstract class DBobject {
 	private $table;
 	private $fields = array();
 	private $table_info = array();
+  private $primary_key;
 	private $db;
 	
 	abstract protected function validate($op = '');
@@ -15,6 +16,7 @@ abstract class DBobject {
 		
 		$this->table = addslashes($table);
 		$this->setFields();
+    $this->detectPrimaryKey();
 	}
 	
 	function __call($method, $args) {
@@ -43,6 +45,24 @@ abstract class DBobject {
 			$this->fields[$row['Field']] = null;
 		}
 	}
+  
+  /**
+   * Search through existing table information retrieved from
+   * the database and determine which field is the primary key
+   * if one is set.
+   * 
+   * @return This DBobject instance
+   */
+  private function detectPrimaryKey() {
+    if(!empty($this->table_info)) {
+      foreach($this->table_info as $field_name => $table_info) {
+        if($table_info['Key'] == 'PRI') {
+          $this->primary_key = $field_name;
+          return $this;
+        }
+      }
+    }
+  }
 	
 	private function _validate($op) {		
 		$validation = $this->validate($op);
