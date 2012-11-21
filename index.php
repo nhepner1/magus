@@ -31,8 +31,7 @@ $dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('d
 
 $dbusers = new DBusers(new DBQuery($dbconnect->connection()));
 $dbusers->load(1);
-$dbusers->setUsername('testusername');
-$dbusers->save();
+$dbusers->delete();
 
 $page->setRegion('content', '<pre>'.print_r($dbusers, TRUE).'</pre>');
 print $page->render();

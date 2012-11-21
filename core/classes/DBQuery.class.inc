@@ -90,12 +90,11 @@ class DBQuery {
    *  The number of rows to be removed
    * @return Current DBQuery instance
    */
-  public function delete($table, $condition, $limit) {
+  public function delete($table, $condition, $limit = '') {
     $limit = ($limit == '') ? '': ' LIMIT '.$limit;
     
-    //TODO: convert to vsprintf()
-    $delete = "DELETE FROM {$table} WHERE {$condition} {$limit}";
-    $this->executeQuery($delete);
+    $sql = sprintf("DELETE FROM `%s` WHERE %s %s", $table, $condition, $limit); 
+    $this->executeQuery($sql);
     
     return $this;
   }
