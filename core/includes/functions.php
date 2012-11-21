@@ -28,5 +28,5 @@ function magus_exception($exception) {
 }
 
 function pre($content) {
-	print "<pre>".print_r($content, true)."</pre>";
+	return "<pre>".print_r($content, true)."</pre>";
 }
