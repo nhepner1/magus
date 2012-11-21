@@ -29,10 +29,9 @@ $dbconnect = DBConnect::getInstance();
 $dbconnect->connect('main', $registry->setting('db_host'), $registry->setting('db_user'), $registry->setting('db_pass'), $registry->setting('db_name'), TRUE);
 
 
-$dbusers = new DBusers(new DBQuery($dbconnect->connection()));
-$dbusers->load(1);
-$dbusers->delete();
+$dbquery = new DBQuery($dbconnect->connection());
+$dbquery->executeQuery("SELECT * FROM users");
 
-$page->setRegion('content', '<pre>'.print_r($dbusers, TRUE).'</pre>');
+$page->setRegion('content', '<pre>'.print_r($dbquery->getLast()->fetch_array(MYSQLI_ASSOC), TRUE).'</pre>');
 print $page->render();
 

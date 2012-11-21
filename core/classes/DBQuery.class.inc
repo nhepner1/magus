@@ -67,8 +67,6 @@ class DBQuery {
    */
   public function executeQuery($queryStr) {
     
-    // Be cool, wrap your tool...
-    //$queryStr = $this->getDBConnect()->real_escape_string($queryStr);
     $result = $this->getDBConnect()->query($queryStr);
     if(!$result) {
       trigger_error('Error executing query: '.$this->getDBConnect()->error, E_USER_ERROR);
@@ -184,10 +182,6 @@ class DBQuery {
   
   private function _stringQuotes(&$value) {
     $value = is_numeric($value) ? $value : "'".mysql_real_escape_string($value)."'";
-  }
-  
-  private function _executeCleanQuery($queryStr) {
-    
   }
 }
 
