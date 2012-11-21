@@ -75,8 +75,6 @@ class Page {
 		$theme = $this->getTheme();
 		$css = $this->buildCss();
 
-		//$left_sidebar = "This is the left sidebar";
-		$content = "This is the content area";
 		$right_sidebar = "This is the right sidebar";
 		
 		extract($this->regions);
@@ -87,6 +85,4 @@ class Page {
 	}
 	
 	/* --- end PUBLIC FUNCTIONS --- */
-	
-	
 }

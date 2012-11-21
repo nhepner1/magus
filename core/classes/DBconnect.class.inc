@@ -2,13 +2,15 @@
 
 /**
  * Class for establishing, managing, and distributing database connection resources.
+ * 
+ * TODO: Set observer to set the active database in the DBQuery object. Maintain dependency injection.
  */
 class DBconnect {
 
 	/**
 	 * Container for multiple database connection resources.
 	 */
-	private static $connections = array();
+	private $connections = array();
   
   /**
    * Pointer for the current active database connection.
@@ -20,13 +22,8 @@ class DBconnect {
    */
 	private static $instance; 
 	
-	/**
-	 * Constructor
-	 */
-	private function __construct() {}
-	
-	/**
-	 * Prevent cloning of the object: issues an E_USER_ERROR if this is attempted
+  /**
+   * Prevent cloning of the object: issues an E_USER_ERROR if this is attempted
    * 
    * @return void
 	 */
@@ -51,6 +48,8 @@ class DBconnect {
   /**
    * Create a database connection
    * 
+   * @param $connection_id
+   *  The assigned connection string to associate with the new 
    * @param $host
    *  Hostname of the requested database.
    * @param $user
@@ -61,18 +60,36 @@ class DBconnect {
    *  Name of the database to use for connection.
    * @return The activeConnection id for the newly created database.
    */
-	public function connect($host, $user, $password, $database) {
-	  //@TODO: Create abstraction layer to use multiple database types.
-	  //@TODO: Add a string based assignment for 
-		$this->connections[] = new mysqli($host, $user, $password, $database);
-		$connection_id = count($this->connections) -1;
+	public function connect($connection_id, $host, $user, $password, $database, $setActive = FALSE) {
+    
+    //@TODO: Create abstraction layer to use multiple database types.
+    $this->connections[$connection_id] = new mysqli($host, $user, $password, $database);
+
 		if(mysqli_connect_errno()) {
 			trigger_error('Error connecting to host. '.$this->connections[$connection_id]->error, E_USER_ERROR);
 		}
+    
+    if($setActive) {
+      $this->setActiveConnection($connection_id);
+    }
 		
-		return $connection_id;
+		return $this->connections[$connection_id];
 	}
 
+  /**
+   * Retrieve active connection
+   * 
+   * @return Active connection. If no connection is set, trigger error.
+   */
+  public function connection() {
+    
+    if(!isset($this->connections[$this->activeConnection])) {
+      trigger_error('Active connection not available. Set active connection before requesting.', E_USER_ERROR);
+    }
+    
+    return $this->connections[$this->activeConnection];
+  }
+   
 	/**
 	 * Close active connection
    * 
@@ -90,8 +107,9 @@ class DBconnect {
 	 * @param int new connection id
 	 * @return Current DBConnect instance
 	 */
-	public function setActiveConnection(int $new) {
-		$this->activeConnection = $new;
+	public function setActiveConnection($connection_id) {
+
+		$this->activeConnection = $connection_id;
     
     return $this;
 	}
