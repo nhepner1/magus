@@ -11,7 +11,7 @@ define('PLUGINS_PATH', BASE_PATH.DS."plugins");
 define('CLASSES_PATH', CORE_PATH.DS."classes");
 define('THEMES_PATH', BASE_PATH.DS."themes");
 
-require_once INCLUDES_PATH.DS."functions.php";
+require_once INCLUDES_PATH.DS."setup.php";
 require_once INCLUDES_PATH.DS."config.php";
 
 $registry = Registry::getInstance();
