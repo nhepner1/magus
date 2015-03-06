@@ -1,4 +1,4 @@
-<form method="post" action="?q=<?php echo implode("/", q()); ?>">
+<form method="post" action="<?php print $_SERVER['PHP_SELF']; ?>">
 <table class="login">
 	<tr>
     	<th class="grey_3" colspan="2" bgcolor="#eeeeee">Login</th>

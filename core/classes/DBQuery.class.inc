@@ -68,6 +68,8 @@ class DBQuery {
   public function executeQuery($queryStr) {
     
     $result = $this->getDBConnect()->query($queryStr);
+
+
     if(!$result) {
       trigger_error('Error executing query: '.$this->getDBConnect()->error, E_USER_ERROR);
     } else {
@@ -76,7 +78,7 @@ class DBQuery {
     
     return $result;
   }
-  
+
   /**
    * Delete records from the database
    * 
@@ -155,15 +157,25 @@ class DBQuery {
    * @return array
    */
   public function fetchArray() {
+    $return = array();
     while($row = $this->last->fetch_array(MYSQLI_ASSOC)){
       $return[] = $row; 
     }
-    return $return;
+
+    if($return) {
+      return $return;
+    }
+
+    return FALSE;
   }
   
   public function fetchArrayRow($row_number = 0) {
     $return = $this->fetchArray();
-    return $return[$row_number];
+    if($return) {
+      return $return[$row_number];
+    }
+
+    return FALSE;
   }
   
   /**

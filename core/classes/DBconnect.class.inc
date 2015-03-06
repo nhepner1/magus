@@ -65,7 +65,7 @@ class DBconnect {
     //@TODO: Create abstraction layer to use multiple database types.
     $this->connections[$connection_id] = new mysqli($host, $user, $password, $database);
 
-		if(mysqli_connect_errno()) {
+		if($this->connections[$connection_id]->connect_errno) {
 			trigger_error('Error connecting to host. '.$this->connections[$connection_id]->error, E_USER_ERROR);
 		}
     
@@ -113,8 +113,22 @@ class DBconnect {
     
     return $this;
 	}
-	
-	/**
+
+  /**
+   * Query function to run raw sql against the database. NOT SAFE.
+   */
+  public function query($sql) {
+
+    $result = $this->connection()->query($sql);
+
+    if(!$result) {
+      trigger_error("There was an error with your query: " . $this->connection()->errno . ": " . $this->connection()->error, E_USER_ERROR);
+    }
+
+    return $result;
+  }
+
+  /**
 	 * Deconstruct the object
 	 * close all of the database connections
 	 */
@@ -123,4 +137,6 @@ class DBconnect {
 			$connection->close();
 		}
 	}
+
+
 }

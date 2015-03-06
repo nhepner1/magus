@@ -63,7 +63,7 @@ class Page {
 	}
 	
 	private function buildJS() {
-		foreach($this-js as $js_file) {
+		foreach($this->js as $js_file) {
 			
 		}
 	}
@@ -74,13 +74,11 @@ class Page {
 		$title = $this->getTitle();
 		$theme = $this->getTheme();
 		$css = $this->buildCss();
-
-		$right_sidebar = "This is the right sidebar";
 		
 		extract($this->regions);
 
 		ob_start();
-		include "themes/".$this->theme."/main.tpl.php";
+		include "themes/".$this->theme."/main.tpl.php"; //TODO: Template should be dynamically set.
 		return ob_get_clean();
 	}
 	
