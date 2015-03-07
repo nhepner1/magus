@@ -2,6 +2,8 @@
 
 This is a php based framework used almost entirely for the education of advanced code theory in PHP. This should demonstrate various patterns in use, and how they relate and interact to produce an easily maintained, modified, and extended framework for the purpose of producing websites. 
 
+Hoping to generate a merge conflict!!
+
 ## Project Status
 
 Currently, the Magus framework is considered to be under active development. There is no current version, as this project has only met its prototype qualifications and should be considered highly unstable. Expect major and frequent API and usage changes. Use of this codebase for any kind of production usage is not recommended. The application of this as a learning tool is also not currently recommended, as there is currently no outline as to which principles should be demonstrated, nor is it documented as any more than an afterthought.
