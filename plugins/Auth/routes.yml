@@ -1,0 +1,9 @@
+
+pages:
+  logout:
+    controller: AuthLogoutController
+
+  user/register/%:
+    controller: UserRegisterController
+
+

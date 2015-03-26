@@ -1,0 +1,26 @@
+
+database:
+  db_host: localhost
+  db_user: magus
+  db_pass: magus_user
+  db_name: magus
+
+application:
+  admin_url: admin
+  theme: default
+  admin_path: admin
+  unique_email: true
+
+sessions:
+  session_name: magus_secure_session
+  secure_connections_only: false
+
+authentication:
+  password_salt: ThmpLxkeZAKTjcmp5ITn
+  hash_algorithm: sha512
+
+plugins:
+  Auth:
+    enabled: true
+  Template:
+    enabled: true

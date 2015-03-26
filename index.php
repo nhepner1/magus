@@ -11,11 +11,7 @@ define('CLASSES_PATH', CORE_PATH.DS."classes");
 define('THEMES_PATH', BASE_PATH.DS."themes");
 
 require_once INCLUDES_PATH.DS."functions.php";
-require_once CONFIG_PATH.DS."config.php";
 require_once INCLUDES_PATH.DS."magus.php";
-
-# Include primary application.
-$registry = Registry::getInstance();
 
 #TODO: Validate application requirements before bootstrapping.
 

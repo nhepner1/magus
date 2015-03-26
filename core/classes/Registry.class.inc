@@ -45,4 +45,35 @@ class Registry {
 			return self::$settings[$key];
 		}		
 	}
+
+  /**
+   * This allows us to call the settings array dynamically
+   * based on an arbitrary number of nested array keys.
+   *
+   * @return string
+   */
+  public function getSetting() {
+    $setting = '';
+    $args = func_get_args();
+    $keys = array();
+
+    foreach($args as $key) {
+      $keys[] = str_replace("'", "\\'", $key);
+    }
+
+
+    $index = "['". join("']['", $keys) . "']";
+
+    eval("\$setting = self::\$settings{$index};");
+
+    return $setting;
+  }
+
+  public function loadConfigFile($path) {
+    $config = yaml_parse_file($path);
+
+    foreach($config as $key => $settings) {
+      $this->setting($key, $settings);
+    }
+  }
 }
