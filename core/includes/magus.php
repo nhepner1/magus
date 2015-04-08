@@ -20,23 +20,7 @@ $dbconnect->connect('main',
   TRUE
 );
 
-// Initiate form handling
-if($_POST) {
-
-    //TODO: Create observer for registered forms to identify and process post requests
-    if($_POST['username'] && $_POST['password']) {
-
-        $auth = new Authentication(new DBQuery($dbconnect), $_POST['username'], $_POST['password']);
-
-        $userauth = $auth->authenticateUser();
-        if($userauth){
-          $user = new User(new DBQuery($dbconnect));
-          $user->load($userauth['id']);
-          $_SESSION['user'] = $user;
-        }
-    }
-}
-
+// Register request.
 $request = new Request($_SERVER, $_GET, $_POST);
 $registry->setting('request', $request);
 
@@ -67,7 +51,9 @@ $page->setRegion('footer', "<a href='logout'>Logout</a>");
 $page->setRegion('content', "Default Template");
 
 $router = new Router($pluginManager);
-$route_handler_info = $router->getControllerHandler('pages', 'logout');
+$route_handler_info = $router->getControllerHandler($router->getControllerType($request->getRequestMethod()), $request->getUri());
+
+die(pre($route_handler_info));
 
 require_once $route_handler_info['controller_path']; // @TODO: Needs to go into autoloader.
 

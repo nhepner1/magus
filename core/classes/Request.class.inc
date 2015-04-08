@@ -3,7 +3,7 @@
 class Request {
   protected $parameters = array();
 
-  protected $method;
+  protected $request_method;
   protected $protocol;
   protected $base_url;
   protected $port;
@@ -17,16 +17,17 @@ class Request {
   protected $user_agent;
   protected $remote_address;
 
-  function __construct($server, $request, $post = array(), $primary_request_parameter = 'q') {
+  function __construct($server, $get = array(), $post = array(), $primary_request_parameter = 'q') {
 
-    if(isset($request[$primary_request_parameter])) {
-      $this->setArgs($request[$primary_request_parameter]);
-      $this->setUri($request[$primary_request_parameter]);
-      unset($request[$primary_request_parameter]);
-      $this->parseServerAttributes($server);
-      $this->setParameters($request);
-      $this->setParameters($post);
+    if(isset($get[$primary_request_parameter])) {
+      $this->setArgs($get[$primary_request_parameter]);
+      $this->setUri($get[$primary_request_parameter]);
+      unset($get[$primary_request_parameter]);
     }
+
+    $this->parseServerAttributes($server);
+    $this->setParameters($get);
+    $this->setParameters($post);
   }
 
   /**
@@ -46,19 +47,19 @@ class Request {
   }
 
   /**
-   * @param mixed $method
+   * @return mixed
    */
-  public function setMethod($method)
+  public function getRequestMethod()
   {
-    $this->method = $method;
+    return $this->request_method;
   }
 
   /**
-   * @return mixed
+   * @param mixed $request_method
    */
-  public function getMethod()
+  public function setRequestMethod($request_method)
   {
-    return $this->method;
+    $this->request_method = $request_method;
   }
 
   /**
@@ -178,6 +179,7 @@ class Request {
     $this->setBaseUrl($server['SERVER_NAME']);
     $this->setPort($server['SERVER_PORT']);
     $this->setRequestTime($server['REQUEST_TIME']);
+    $this->setRequestMethod($server['REQUEST_METHOD']);
   }
 
   protected function sanitize($string) {

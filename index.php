@@ -10,7 +10,9 @@ define('PLUGINS_PATH', BASE_PATH.DS."plugins");
 define('CLASSES_PATH', CORE_PATH.DS."classes");
 define('THEMES_PATH', BASE_PATH.DS."themes");
 
-require_once INCLUDES_PATH.DS."functions.php";
+require_once INCLUDES_PATH.DS."loader.php";
+require_once INCLUDES_PATH.DS."exceptions.php";
+require_once INCLUDES_PATH.DS."debug.php";
 require_once INCLUDES_PATH.DS."magus.php";
 
 #TODO: Validate application requirements before bootstrapping.

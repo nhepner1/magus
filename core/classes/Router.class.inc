@@ -7,27 +7,59 @@ class Router{
   protected $routes = array();
   protected $plugin_manager;
   protected $routes_config_filename = "routes.yml";
-
+  protected $paths = array();
 
   public function __construct($plugin_manager) {
     $this->setPluginManager($plugin_manager);
     $this->loadRoutes();
   }
 
-  public function setPluginManager(PluginManager $plugin_manager) {
-    $this->plugin_manager = $plugin_manager;
-  }
-
-  public function getPluginManager() {
+  /**
+   * @return mixed
+   */
+  public function getPluginManager()
+  {
     return $this->plugin_manager;
   }
 
-  public function setRoutesConfigFilename($routes_config_filename) {
-    $this->routes_config_filename = $routes_config_filename;
+  /**
+   * @param mixed $plugin_manager
+   */
+  public function setPluginManager(PluginManager $plugin_manager)
+  {
+    $this->plugin_manager = $plugin_manager;
   }
 
-  public function getRoutesConfigFilename() {
+  /**
+   * @return mixed
+   */
+  public function getDefaultPath()
+  {
+    return $this->default_path;
+  }
+
+  /**
+   * @param mixed $default_path
+   */
+  public function setDefaultPath($default_path)
+  {
+    $this->default_path = $default_path;
+  }
+
+  /**
+   * @return string
+   */
+  public function getRoutesConfigFilename()
+  {
     return $this->routes_config_filename;
+  }
+
+  /**
+   * @param string $routes_config_filename
+   */
+  public function setRoutesConfigFilename($routes_config_filename)
+  {
+    $this->routes_config_filename = $routes_config_filename;
   }
 
   public function addRoute($request_type, $route, $route_info = array()) {
@@ -64,13 +96,35 @@ class Router{
     }
   }
 
+  public function getControllerType($request_type) {
+    switch($request_type) {
+      case 'GET':
+        return 'pages';
+        break;
+      case 'POST':
+        return 'forms';
+        break;
+      default:
+        return $request_type;
+    }
+  }
+
   public function getControllerHandler($request_type, $uri_request) {
+
+    if(!$uri_request) {
+      $controller_info = array(
+        'controller' => "DefaultControllerHandler",
+        'controller_path' => '',
+      );
+
+      return $controller_info;
+    }
 
     // @TODO: Needs more distinct error handling.
     if(!isset($this->routes[$request_type][$uri_request]['controller'])
       || !file_exists($this->routes[$request_type][$uri_request]['controller_path'])) {
 
-      return "404 error"; // @TODO: Return 404 controller
+      return "Default404Controller";
     }
 
     require_once($this->routes[$request_type][$uri_request]['controller_path']); // Need to sanitize.

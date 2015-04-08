@@ -99,7 +99,7 @@ a:active { color: orange; }
 
 .clear {
 	clear: both;
-	border: 0; !important /* Kill this later */
+	border: 0 !important; /* Kill this later */
 }
 
 fieldset { 

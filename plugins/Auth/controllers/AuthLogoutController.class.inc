@@ -2,9 +2,7 @@
 
 class AuthLogoutController extends PageController {
   public function buildResponse() {
-    $page =& $this->getPage();
-
-
+    $this->getPage()->setTitle("TESTING LOGOUT AUTH");
+    $this->getPage()->setRegion('header',"Testing my plugin manager");
   }
-
 }
