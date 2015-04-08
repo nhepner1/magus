@@ -1,4 +1,6 @@
-<?php
+<?php namespace Magus\Core\Database;
+
+use Mysqli;
 
 /**
  * Class for establishing, managing, and distributing database connection resources.
@@ -63,7 +65,7 @@ class DBconnect {
 	public function connect($connection_id, $host, $user, $password, $database, $setActive = FALSE) {
     
     //@TODO: Create abstraction layer to use multiple database types.
-    $this->connections[$connection_id] = new mysqli($host, $user, $password, $database);
+    $this->connections[$connection_id] = new Mysqli($host, $user, $password, $database);
 
 		if($this->connections[$connection_id]->connect_errno) {
 			trigger_error('Error connecting to host. '.$this->connections[$connection_id]->error, E_USER_ERROR);

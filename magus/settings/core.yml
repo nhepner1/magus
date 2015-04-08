@@ -1,0 +1,35 @@
+namespaces:
+  Magus\Core\Database:    magus/core/database
+  Magus\Core\Theme:       magus/core/theme
+  Magus\Core\Plugin:      magus/core/plugin
+
+  Magus\Plugins:          magus/plugins
+  Magus\Themes:           magus/themes
+
+database:
+  db_host:
+  db_user:
+  db_pass:
+  db_name:
+
+application:
+  name: App
+  admin_url: admin
+  theme: default
+  admin_path: admin
+  unique_email: true
+  path: app
+
+sessions:
+  session_name: magus_secure_session
+  secure_connections_only: false
+
+authentication:
+  password_salt:
+  hash_algorithm: sha512
+
+plugins:
+  Auth:
+    enabled: true
+  Template:
+    enabled: true

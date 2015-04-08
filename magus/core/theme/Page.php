@@ -1,4 +1,4 @@
-<?php
+<?php namespace Magus\Core\Theme;
 
 class Page {
 	
@@ -78,7 +78,7 @@ class Page {
 		extract($this->regions);
 
 		ob_start();
-		include "themes/".$this->theme."/main.tpl.php"; //TODO: Template should be dynamically set.
+		include MAGUS_PATH . DS . "themes/".$this->theme."/main.tpl.php"; //TODO: Template should be dynamically set.
 		return ob_get_clean();
 	}
 	

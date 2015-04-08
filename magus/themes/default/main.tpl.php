@@ -1,7 +1,7 @@
 <html>
 <head>
 <title><?php echo $title; ?></title>
-<link rel="stylesheet" type="text/css" href="themes/default/style.css" />
+<link rel="stylesheet" type="text/css" href="magus/themes/default/style.css" />
 </head>
 <body>
 <div class="outerwrapper">

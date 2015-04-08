@@ -1,4 +1,4 @@
-<?php
+<?php namespace Magus\Core\Theme;
 
 abstract class PageController {
 
@@ -34,5 +34,4 @@ abstract class PageController {
     $this->buildResponse();
     return $this->getPage()->render();
   }
-
 }

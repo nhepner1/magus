@@ -1,4 +1,4 @@
-<?php
+<?php namespace Magus\Core\Database;
 
 abstract class DBobject {
 

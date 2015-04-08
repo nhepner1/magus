@@ -1,4 +1,6 @@
-<?php
+<?php namespace Magus\Plugins\Auth\Controller;
+
+use \Magus\Core\Theme\PageController;
 
 class AuthLogoutController extends PageController {
   public function buildResponse() {

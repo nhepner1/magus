@@ -1,16 +1,14 @@
 <?php 
 
-define('DS', DIRECTORY_SEPARATOR);
+define('DS',            DIRECTORY_SEPARATOR);
+define('BASE_PATH',     dirname(__FILE__));
+define('MAGUS_PATH',    BASE_PATH  . DS . "magus");
+define('CORE_PATH',     MAGUS_PATH . DS . "core");
+define('INCLUDES_PATH', MAGUS_PATH . DS . "includes");
+define('SETTINGS_PATH', MAGUS_PATH . DS . "settings");
+define('PLUGINS_PATH',  MAGUS_PATH . DS . "plugins");
 
-define('BASE_PATH', dirname(__FILE__));
-define('CORE_PATH', BASE_PATH.DS."core");
-define('INCLUDES_PATH', CORE_PATH.DS."includes");
-define('CONFIG_PATH', BASE_PATH.DS."config");
-define('PLUGINS_PATH', BASE_PATH.DS."plugins");
-define('CLASSES_PATH', CORE_PATH.DS."classes");
-define('THEMES_PATH', BASE_PATH.DS."themes");
-
-require_once INCLUDES_PATH.DS."loader.php";
+require_once CORE_PATH.DS."AutoLoader.php";
 require_once INCLUDES_PATH.DS."exceptions.php";
 require_once INCLUDES_PATH.DS."debug.php";
 require_once INCLUDES_PATH.DS."magus.php";

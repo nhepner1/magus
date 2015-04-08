@@ -1,4 +1,4 @@
-<?php 
+<?php namespace Magus\Core;
 
 class Registry {
 	
@@ -69,11 +69,14 @@ class Registry {
     return $setting;
   }
 
-  public function loadConfigFile($path) {
-    $config = yaml_parse_file($path);
+  public function loadConfigFile($filename) {
 
-    foreach($config as $key => $settings) {
-      $this->setting($key, $settings);
+    if(file_exists($filename)) {
+      $config = yaml_parse_file($filename);
+
+      foreach ($config as $key => $settings) {
+        $this->setting($key, $settings);
+      }
     }
   }
 }

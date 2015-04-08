@@ -1,4 +1,4 @@
-<?php
+<?php namespace Magus\Core\Database;
 
 /**
  * Class for multiple and general query results.
