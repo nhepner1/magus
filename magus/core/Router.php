@@ -18,6 +18,14 @@ class Router{
     return $this;
   }
 
+  /**
+   * @return array
+   */
+  public function getRoutes()
+  {
+    return $this->routes;
+  }
+
   public function loadRoutesFromConfig($filename) {
 
     if(file_exists($filename)) {
@@ -50,19 +58,34 @@ class Router{
 
   public function getControllerHandler($request_type, $uri_request) {
 
-    // @TODO: Will set up default handlers externally
-    if(!$uri_request) {
-      return array('controller' => "DefaultHomeController");
-    }
+    foreach($this->routes[$request_type] as $route_name => $route) {
 
-    // Check to see if it's
+      if($uri_request == $route['path']) {
+        return $this->routes[$request_type][$route_name];
+      }
+    }
 
     // @TODO: Needs more distinct error handling.
     if(!isset($this->routes[$request_type][$uri_request]['controller'])) {
       return array('controller' => "Default404Controller");
     }
 
-    return $this->routes[$request_type][$uri_request];
+  }
+
+  /**
+   * @param mixed $default_handler
+   */
+  public function setDefaultHandler($default_handler)
+  {
+    $this->default_handler = $default_handler;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDefaultHandler()
+  {
+    return $this->default_handler;
   }
 }
 

@@ -11,7 +11,7 @@ $loader->addNameSpace('Magus\Core', CORE_PATH);
 
 // Instantiate the registry and import some basic initial settings.
 $registry = \Magus\Core\Registry::getInstance();
-$registry->loadConfigFile(SETTINGS_PATH . DS . "core.yml");
+$registry->loadConfigFile(DEFAULTS_PATH . DS . "settings.yml");
 $registry->loadConfigFile(BASE_PATH
   . DS
   . $registry->getSetting('application', 'path')
@@ -47,17 +47,6 @@ $dbconnect->connect('main',
 $request = new Magus\Core\Request($_SERVER, $_GET, $_POST);
 $registry->setting('request', $request);
 
-// @TODO: Yeah, let's do this a little differently...
-// Set up Default response.
-$page = new Magus\Core\Theme\Page();
-$page->setTitle('Magus v2.0: Electric Boogaloo');
-$page->setTheme($registry->getSetting('application', 'theme') ? $registry->getSetting('application', 'theme') : 'default');
-$page->setRegion('header', "Magus v2.0: Electric Boogaloo");
-$page->setRegion('left_sidebar', "Tada!!!");
-$page->setRegion('right_sidebar', "Wicked");
-$page->setRegion('footer', "<a href='logout'>Logout</a>");
-$page->setRegion('content', "Default Template");
-
 // Set up a router so that we can register routes.
 $router = new Magus\Core\Router($pluginManager);
 
@@ -68,34 +57,42 @@ $pluginManager->addPluginDirectory(PLUGINS_PATH);
 $plugins = $registry->getSetting('plugins');
 foreach($plugins as $plugin_name => $plugin_config) {
 
+  // Determine Plugin Path
+  $plugin_path = isset($plugin_config['path']) ? $plugin_config['path'] : PLUGINS_PATH.DS.$plugin_name;
+
   $plugin = new Magus\Core\Plugin($plugin_name);
-  $plugin->setPath(PLUGINS_PATH.DS.$plugin_name);
+  $plugin->setPath($plugin_path);
+
+  // Determine plugin prefix
+  $plugin_namespace_prefix = isset($plugin_config['namespace_prefix']) ? $plugin_config['namespace_prefix'] . '\\' : 'Magus\Plugins\\';
 
   if($plugin_config['enabled']) {
     $plugin->enable();
 
     // Register plugin namespaces with Autoloader;
-    $controller_namespace = 'Magus\Plugins\\' . $plugin->getName() . "\\Controller";
+    $controller_namespace = $plugin_namespace_prefix . $plugin->getName() . "\\Controller";
+
     $loader->addNameSpace($controller_namespace, $plugin->getPath() . DS . "controllers");
 
-    $models_namespace = 'Magus\Plugins\\' . $plugin->getName() . "\\Models";
+    $models_namespace = $plugin_namespace_prefix . $plugin->getName() . "\\Models";
     $loader->addNameSpace($models_namespace, $plugin->getPath() . DS . "models");
 
-    $views_namespace = 'Magus\Plugins\\' . $plugin->getName() . "\\Views";
+    $views_namespace = $plugin_namespace_prefix . $plugin->getName() . "\\Views";
     $loader->addNameSpace($views_namespace, $plugin->getPath() . DS . "views");
 
     $routes_file = $plugin->getPath() . DS . 'routes.yml';
+
     if(file_exists($routes_file)) {
       // Add any new routes created by plugins.
       $router->loadRoutesFromConfig($routes_file);
     }
-
   }
   $pluginManager->addPlugin($plugin);
 }
 
 $response_handler = $router->getControllerHandler('pages', $request->getUri());
 
+$page = new Magus\Core\Theme\Page();
 $response = new $response_handler['controller']($page);
 
 print $response->render();

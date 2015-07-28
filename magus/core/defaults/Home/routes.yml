@@ -1,0 +1,5 @@
+
+pages:
+  home:
+    controller: Magus\Core\Defaults\Home\Controller\HomeController
+    path:

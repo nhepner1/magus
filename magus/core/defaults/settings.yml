@@ -1,23 +1,17 @@
 namespaces:
   Magus\Core\Database:    magus/core/database
+  Magus\Core\Defaults:    magus/core/defaults
   Magus\Core\Theme:       magus/core/theme
   Magus\Core\Plugin:      magus/core/plugin
 
   Magus\Plugins:          magus/plugins
   Magus\Themes:           magus/themes
 
-database:
-  db_host:
-  db_user:
-  db_pass:
-  db_name:
-
 application:
   name: App
   admin_url: admin
-  theme: default
   admin_path: admin
-  unique_email: true
+  theme: default
   path: app
 
 sessions:
@@ -29,7 +23,7 @@ authentication:
   hash_algorithm: sha512
 
 plugins:
-  Auth:
+  Home:
     enabled: true
-  Template:
-    enabled: true
+    path: magus/core/defaults/Home
+    namespace_prefix: Magus\Core\Defaults

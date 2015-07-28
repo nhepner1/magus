@@ -61,10 +61,9 @@ class Registry {
       $keys[] = str_replace("'", "\\'", $key);
     }
 
-
     $index = "['". join("']['", $keys) . "']";
 
-    eval("\$setting = self::\$settings{$index};");
+    eval("if(isset(self::\$settings{$index})) { \$setting = self::\$settings{$index}; }");
 
     return $setting;
   }
@@ -75,6 +74,12 @@ class Registry {
       $config = yaml_parse_file($filename);
 
       foreach ($config as $key => $settings) {
+				$temp = $this->getSetting($key);
+
+				if(is_array($temp)) {
+					$settings = array_merge($temp, $settings);
+				}
+
         $this->setting($key, $settings);
       }
     }

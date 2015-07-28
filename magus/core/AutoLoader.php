@@ -73,8 +73,10 @@ class AutoLoader
   }
 
   protected function requireFile($file) {
+
     if(file_exists($file)) {
       require_once $file;
+
       return true;
     }
 

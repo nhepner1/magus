@@ -1,6 +1,6 @@
 <?php namespace Magus\Core\Theme;
 
-abstract class PageController {
+abstract class Controller {
 
   protected $page;
 
@@ -27,6 +27,14 @@ abstract class PageController {
 
   public function buildResponse() {
 
+// Set up Default response.
+
+    $this->getPage()->setTitle('Magus v2.0: Electric Boogaloo');
+    $this->getPage()->setRegion('header', "Magus v2.0: Electric Boogaloo");
+    $this->getPage()->setRegion('left_sidebar', "Tada!!!");
+    $this->getPage()->setRegion('right_sidebar', "Wicked");
+    $this->getPage()->setRegion('footer', "<a href='logout'>Logout</a>");
+    $this->getPage()->setRegion('content', "Default Template");
   }
 
   function render() {

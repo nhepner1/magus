@@ -2,8 +2,8 @@
 pages:
   logout:
     controller: Magus\Plugins\Auth\Controller\AuthLogoutController
+    path: logout
 
-  user/register/%:
+  user_register:
     controller: UserRegisterController
-
-
+    path: user/register/%

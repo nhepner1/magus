@@ -10,6 +10,7 @@ application:
   theme: default
   admin_path: admin
   unique_email: true
+  home_controller: \Magus\Core\Theme\Page
 
 sessions:
   session_name: magus_secure_session
