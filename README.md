@@ -4,7 +4,11 @@ This is a php based framework used almost entirely for the education of advanced
 
 ## Project Status
 
-Currently, the Magus framework is considered to be under active development. There is no current version, as this project has only met its prototype qualifications and should be considered highly unstable. Expect major and frequent API and usage changes. Use of this codebase for any kind of production usage is not recommended. The application of this as a learning tool is also not currently recommended, as there is currently no outline as to which principles should be demonstrated, nor is it documented as any more than an afterthought.
+The Magus framework is considered to be fully deprecated and is no longer under development. 
+
+While this framework helped to demonstrate advanced PHP, framework, and CMS concepts, development has not kept up with modern development theories, such as composer, and does not utilize many of the useful features in PHP 7.
+
+Any community contributed pull requests will be reviewed and accepted, but active development by project maintainer will no longer continue.
 
 ## Roadmap/Wishlist
 
